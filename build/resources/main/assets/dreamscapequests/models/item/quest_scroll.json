@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "dreamscapequests:item/quest_scroll"
-  }
-}
