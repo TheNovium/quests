@@ -80,6 +80,7 @@ public class ClickableSpriteWidget extends DrawableHelper implements Drawable, E
                 default -> 0;
             };
             fill(matrices, x, y, x + width, y + height,  color);
+            drawTexture(matrices, x + 1, y + 1, 0, 0, width - 2, height - 2, width - 2, height - 2);
         }
     }
     
