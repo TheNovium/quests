@@ -20,7 +20,7 @@ public class DataStorage {
         try {
             FILE.getParentFile().mkdirs();
             if(!FILE.exists()){
-                temp = new NbtCompound();
+                temp = QuestTree.generateDefaultNbt();
                 shouldSave = true;
             } else {
                 temp = NbtIo.readCompressed(FILE);

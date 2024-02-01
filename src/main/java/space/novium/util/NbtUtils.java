@@ -1,6 +1,7 @@
 package space.novium.util;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 
 public class NbtUtils {
     public static int getOrDefault(NbtCompound nbt, String key, int i){
@@ -71,6 +72,20 @@ public class NbtUtils {
             return nbt.getLongArray(key);
         }
         return l;
+    }
+    
+    public static NbtElement getOrDefault(NbtCompound nbt, String key, NbtElement n){
+        if(nbt.contains(key)){
+            return nbt.get(key);
+        }
+        return n;
+    }
+    
+    public static NbtCompound getOrDefault(NbtCompound nbt, String key, NbtCompound n){
+        if(nbt.contains(key)){
+            return nbt.getCompound(key);
+        }
+        return n;
     }
     
     public static boolean containsAll(NbtCompound nbt, String... keys){

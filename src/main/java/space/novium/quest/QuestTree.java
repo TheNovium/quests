@@ -5,36 +5,37 @@ import space.novium.DreamscapeQuests;
 import space.novium.util.NbtUtils;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class QuestTree {
-    private String name;
+    private String title;
     private List<QuestChapter> chapters;
     private NbtCompound nbt;
     
     public QuestTree(NbtCompound nbt){
         this.nbt = nbt;
-        int ch = NbtUtils.getOrDefault(nbt, "chapters", 0);
-        chapters = new LinkedList<>();
-        name = NbtUtils.getOrDefault(nbt, "title", "Dreamscape Quests");
-        for(int i = 0; i < ch; i++){
-            String temp = String.valueOf(i);
-            if(nbt.contains(temp)){
-                NbtCompound chapterInfo = nbt.getCompound(temp);
-                QuestChapter tempChapter = new QuestChapter(chapterInfo);
-                if(!tempChapter.isValidChapter()){
-                    tempChapter = QuestChapter.createBlankChapter();
-                }
-                chapters.set(i, tempChapter);
+        NbtCompound ch = NbtUtils.getOrDefault(nbt, "chapters", new NbtCompound());
+        title = NbtUtils.getOrDefault(nbt, "title", "Dreamscape Quests");
+        int num = ch.getSize();
+        chapters = new ArrayList<>(num);
+        List<QuestChapter> toAdd = new ArrayList<>();
+        for(String s : ch.getKeys()){
+            NbtCompound chapterInfo = ch.getCompound(s);
+            if(QuestChapter.isValidChapter(chapterInfo)){
+                QuestChapter c = new QuestChapter(chapterInfo);
+                chapters.set(c.getChapterNum(), c);
             } else {
-                DreamscapeQuests.LOGGER.warn("Failed to read chapter " + temp + " NBT data");
+                toAdd.add(QuestChapter.createBlankChapter(-1));
             }
+        }
+        for(QuestChapter c : toAdd){
+            c.setChapterNum(chapters.size());
+            chapters.add(c);
         }
     }
     
     public void addBlankChapter(){
-        chapters.add(QuestChapter.createBlankChapter());
+        chapters.add(QuestChapter.createBlankChapter(chapters.size()));
     }
     
     public void save(){
@@ -51,6 +52,23 @@ public class QuestTree {
         for(String s : nbt.getKeys()){
             nbt.remove(s);
         }
+        NbtCompound newData = generateDefaultNbt();
+        for(String s : newData.getKeys()){
+            nbt.put(s, newData.get(s));
+        }
         chapters = new ArrayList<>();
+    }
+    
+    public static QuestTree generateBlankTree(){
+        return new QuestTree(generateDefaultNbt());
+    }
+    
+    public static NbtCompound generateDefaultNbt(){
+        NbtCompound data = new NbtCompound();
+        data.putInt("version", 1);
+        data.putString("title", "New Quest Tree");
+        data.putString("description", "Description of quest pack");
+        data.put("chapters", new NbtCompound());
+        return data;
     }
 }
