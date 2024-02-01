@@ -4,6 +4,7 @@ import net.minecraft.nbt.NbtCompound;
 import space.novium.DreamscapeQuests;
 import space.novium.util.NbtUtils;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,5 +45,12 @@ public class QuestTree {
             }
             i++;
         }
+    }
+    
+    public void clear(){
+        for(String s : nbt.getKeys()){
+            nbt.remove(s);
+        }
+        chapters = new ArrayList<>();
     }
 }

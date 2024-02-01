@@ -54,6 +54,11 @@ public class DataStorage {
         return questTree;
     }
     
+    public void clear(){
+        questTree.clear();
+        save();
+    }
+    
     public enum ErrorCodes {
         FAILED_TO_OPEN;
     }
