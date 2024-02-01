@@ -16,20 +16,29 @@ public class DataStorage {
     
     private DataStorage(){
         NbtCompound temp = new NbtCompound();
+        boolean shouldSave = false;
         try {
             FILE.getParentFile().mkdirs();
             if(!FILE.exists()){
                 temp = new NbtCompound();
-                save();
+                shouldSave = true;
             } else {
                 temp = NbtIo.readCompressed(FILE);
             }
         } catch (Exception e){
             DreamscapeQuests.LOGGER.error("Unable to read or create Quest NBT data file!");
             temp.putInt("Error", ErrorCodes.FAILED_TO_OPEN.ordinal());
+            shouldSave = true;
         }
         nbt = temp;
+        if(shouldSave){
+            save();
+        }
         questTree = new QuestTree(nbt);
+    }
+    
+    public static void init(){
+        DreamscapeQuests.LOGGER.info("Loading questing information");
     }
     
     public void save(){
