@@ -11,7 +11,7 @@ public class DreamscapeQuests implements ModInitializer {
 	public static final String MODID = "dreamscapequests";
 	public static final String NAME = "Dreamscape Quests";
 	
-    public static final Logger LOGGER = LoggerFactory.getLogger("dreamscape-quests");
+    public static final Logger LOGGER = LoggerFactory.getLogger("dreamscapequests");
 
 	@Override
 	public void onInitialize() {
