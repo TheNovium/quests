@@ -72,4 +72,13 @@ public class NbtUtils {
         }
         return l;
     }
+    
+    public static boolean containsAll(NbtCompound nbt, String... keys){
+        for(String key : keys){
+            if(!nbt.contains(key)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

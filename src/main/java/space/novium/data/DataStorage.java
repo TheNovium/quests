@@ -49,6 +49,10 @@ public class DataStorage {
         }
     }
     
+    public QuestTree getQuestTree() {
+        return questTree;
+    }
+    
     public enum ErrorCodes {
         FAILED_TO_OPEN;
     }
