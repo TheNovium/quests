@@ -9,11 +9,15 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import space.novium.client.gui.widget.ClickableSpriteWidget;
 import space.novium.item.ModItems;
+import space.novium.util.FileHelper;
+import space.novium.util.GUIUtil;
 
 @Environment(EnvType.CLIENT)
 public class QuestGUIScreen extends Screen {
     private ButtonWidget majorExitButton;
+    private ClickableSpriteWidget testWidget;
     
     private PlayerEntity player;
     
@@ -25,9 +29,7 @@ public class QuestGUIScreen extends Screen {
     @Override
     protected void init() {
         client.keyboard.setRepeatEvents(false);
-        this.majorExitButton = (ButtonWidget) addDrawableChild(new ButtonWidget(width - 16, 2, 14, 14, new LiteralText("X"), (button) -> {
-            close();
-        }));
+        testWidget = addDrawableChild(new ClickableSpriteWidget(width - 14, 1, 12, 12, FileHelper.loadImageByID("gui/close_button"), 0x0000000, 0x55ff0000, 0x99ffaaaa, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
     }
     
     @Override
