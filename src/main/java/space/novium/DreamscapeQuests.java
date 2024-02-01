@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import space.novium.data.DataStorage;
 import space.novium.util.registration.ModItems;
+import space.novium.util.registration.ModRegistries;
 
 public class DreamscapeQuests implements ModInitializer {
 	public static final String MODID = "dreamscapequests";
@@ -22,8 +23,8 @@ public class DreamscapeQuests implements ModInitializer {
 
 		LOGGER.info("Loading Dreamscape Quest Components");
 		ModItems.init();
+		ModRegistries.registerModRegistries();
 		DataStorage.init();
-		
 	}
 	
 	public static Identifier modName(String ID){

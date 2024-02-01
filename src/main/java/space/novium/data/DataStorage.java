@@ -42,6 +42,7 @@ public class DataStorage {
     }
     
     public void save(){
+        questTree.save();
         try {
             NbtIo.writeCompressed(nbt, FILE);
         } catch (IOException e){

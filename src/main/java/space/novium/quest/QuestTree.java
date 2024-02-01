@@ -35,4 +35,14 @@ public class QuestTree {
     public void addBlankChapter(){
         chapters.add(QuestChapter.createBlankChapter());
     }
+    
+    public void save(){
+        int i = 0;
+        for(QuestChapter chapter : chapters){
+            if(chapter.isDirty()){
+                nbt.put(String.valueOf(i), chapter.save());
+            }
+            i++;
+        }
+    }
 }

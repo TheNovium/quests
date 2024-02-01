@@ -7,12 +7,13 @@ import net.minecraft.server.command.ServerCommandSource;
 import space.novium.data.DataStorage;
 
 public class AddBlankChapterCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> source, CommandManager.RegistrationEnvironment env){
+    public static void register(CommandDispatcher<ServerCommandSource> source){
         source.register(CommandManager.literal("quests").then(CommandManager.literal("addchapter").executes(AddBlankChapterCommand::run)));
     }
     
     private static int run(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {
         DataStorage.INSTANCE.getQuestTree().addBlankChapter();
+        DataStorage.INSTANCE.save();
         return 0;
     }
 }
