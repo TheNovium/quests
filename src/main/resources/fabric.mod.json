@@ -23,6 +23,9 @@
 		],
 		"client": [
 			"space.novium.data.ModClient"
+		],
+		"server": [
+			"space.novium.data.ModServer"
 		]
 	},
 	"mixins": [
