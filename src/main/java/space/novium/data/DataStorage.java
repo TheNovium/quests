@@ -3,6 +3,7 @@ package space.novium.data;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import space.novium.DreamscapeQuests;
+import space.novium.quest.QuestTree;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,7 @@ public class DataStorage {
     public static final File FILE = new File("mods/dreamscapequests/quest_data.nbt");
     public static final DataStorage INSTANCE = new DataStorage();
     private final NbtCompound nbt;
+    private final QuestTree questTree;
     
     private DataStorage(){
         NbtCompound temp = new NbtCompound();
@@ -27,6 +29,7 @@ public class DataStorage {
             temp.putInt("Error", ErrorCodes.FAILED_TO_OPEN.ordinal());
         }
         nbt = temp;
+        questTree = new QuestTree(nbt);
     }
     
     public void save(){
