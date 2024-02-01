@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
-import space.novium.item.ModItems;
+import space.novium.util.registration.ModItems;
 
 public class ModelDataGen extends FabricModelProvider {
     public ModelDataGen(FabricDataGenerator dataGenerator) {

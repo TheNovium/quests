@@ -10,7 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import space.novium.client.gui.widget.ClickableSpriteWidget;
-import space.novium.item.ModItems;
+import space.novium.util.registration.ModItems;
 import space.novium.util.FileHelper;
 import space.novium.util.GUIUtil;
 

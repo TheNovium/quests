@@ -31,4 +31,8 @@ public class QuestTree {
             }
         }
     }
+    
+    public void addBlankChapter(){
+        chapters.add(QuestChapter.createBlankChapter());
+    }
 }

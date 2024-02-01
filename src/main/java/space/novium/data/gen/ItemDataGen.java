@@ -7,7 +7,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 import space.novium.DreamscapeQuests;
-import space.novium.item.ModItems;
+import space.novium.util.registration.ModItems;
 
 public class ItemDataGen extends FabricTagProvider.ItemTagProvider {
     public ItemDataGen(FabricDataGenerator dataGenerator, @Nullable BlockTagProvider blockTagProvider) {

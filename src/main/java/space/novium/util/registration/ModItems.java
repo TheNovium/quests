@@ -1,4 +1,4 @@
-package space.novium.item;
+package space.novium.util.registration;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
@@ -6,6 +6,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import space.novium.DreamscapeQuests;
+import space.novium.item.QuestScroll;
 
 public class ModItems {
     public static final Item QUEST_SCROLL = register(
