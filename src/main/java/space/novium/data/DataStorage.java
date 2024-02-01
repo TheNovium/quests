@@ -1,16 +1,25 @@
 package space.novium.data;
 
+import net.minecraft.client.gui.Element;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import space.novium.DreamscapeQuests;
 import space.novium.quest.QuestTree;
+import space.novium.util.GUIUtil;
 
 import java.io.File;
 import java.io.IOException;
 
 public class DataStorage {
+    //File Information
     public static final File FILE = new File("mods/dreamscapequests/quest_data.nbt");
     public static final DataStorage INSTANCE = new DataStorage();
+    
+    //Button Actions
+    public static final GUIUtil.GenericPressAction SAVE_ACTION = new SaveAction();
+    public static final GUIUtil.GenericPressAction ADD_CHAPTER_ACTION = new AddChapterAction();
+    
+    //Internal variables
     private final NbtCompound nbt;
     private final QuestTree questTree;
     
@@ -31,10 +40,10 @@ public class DataStorage {
             shouldSave = true;
         }
         nbt = temp;
+        questTree = new QuestTree(nbt);
         if(shouldSave){
             save();
         }
-        questTree = new QuestTree(nbt);
     }
     
     public static void init(){
@@ -61,5 +70,19 @@ public class DataStorage {
     
     public enum ErrorCodes {
         FAILED_TO_OPEN;
+    }
+    
+    private static class SaveAction implements GUIUtil.GenericPressAction {
+        @Override
+        public <T extends Element> void onPress(T widget) {
+            INSTANCE.save();
+        }
+    }
+    
+    private static class AddChapterAction implements GUIUtil.GenericPressAction {
+        @Override
+        public <T extends Element> void onPress(T widget) {
+            INSTANCE.getQuestTree().addBlankChapter();
+        }
     }
 }

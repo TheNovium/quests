@@ -110,6 +110,7 @@ public class ClickableSpriteWidget extends DrawableHelper implements Drawable, E
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (clicked(mouseX, mouseY)) {
             onPress.onPress(this);
+            focused = false;
             return true;
         }
         return false;

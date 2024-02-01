@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import space.novium.client.gui.widget.ClickableSpriteWidget;
+import space.novium.data.DataStorage;
 import space.novium.util.registration.ModItems;
 import space.novium.util.FileHelper;
 import space.novium.util.GUIUtil;
@@ -17,19 +18,33 @@ import space.novium.util.GUIUtil;
 @Environment(EnvType.CLIENT)
 public class QuestGUIScreen extends Screen {
     private ButtonWidget majorExitButton;
-    private ClickableSpriteWidget testWidget;
+    private ClickableSpriteWidget closeButton;
+    private ClickableSpriteWidget saveButton;
+    private ClickableSpriteWidget addChapterButton;
+    private ClickableSpriteWidget addQuestButton;
+    
+    private int buttonBackgroundColor = 0x00000000;
+    private int buttonHoverColor = 0x77ff00aa;
+    private int buttonClickColor = 0xaaff77bb;
+    
+    private boolean creativeMode;
     
     private PlayerEntity player;
     
     public QuestGUIScreen(PlayerEntity player){
         super(new TranslatableText(ModItems.QUEST_SCROLL.getTranslationKey()));
         this.player = player;
+        creativeMode = player.isCreative() && player.hasPermissionLevel(2);
     }
     
     @Override
     protected void init() {
         client.keyboard.setRepeatEvents(false);
-        testWidget = addDrawableChild(new ClickableSpriteWidget(width - 14, 1, 12, 12, FileHelper.loadImageByID("gui/close_button"), 0x0000000, 0x55ff0000, 0x99ffaaaa, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
+        closeButton = addDrawableChild(new ClickableSpriteWidget(width - 14, 0, 12, 12, FileHelper.loadImageByID("gui/close_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
+        if(creativeMode){
+            saveButton = addDrawableChild(new ClickableSpriteWidget(width / 2 - 16, 0, 15, 15, FileHelper.loadImageByID("gui/save_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.SAVE_ACTION, new LiteralText("Save")));
+            addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.ADD_CHAPTER_ACTION, new LiteralText("Add Chapter")));
+        }
     }
     
     @Override

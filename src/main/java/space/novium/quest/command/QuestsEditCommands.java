@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import space.novium.DreamscapeQuests;
 import space.novium.data.DataStorage;
 
 public class QuestsEditCommands {
