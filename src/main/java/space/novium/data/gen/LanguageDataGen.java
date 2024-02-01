@@ -12,5 +12,7 @@ public class LanguageDataGen extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder builder) {
         builder.add(ModItems.QUEST_SCROLL, "Quest Scroll");
+        builder.add("key.dreamscapequests.open_quests", "Open Quests");
+        builder.add("category.dreamscapequests.name", "Dreamscape Quests");
     }
 }
