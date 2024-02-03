@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Element;
 
 public class GUIUtil {
     public static final GenericPressAction CLOSE_ACTION = new CloseAction();
+    public static final GenericPressAction EMPTY_ACTION = new EmptyAction();
     
     @Environment(EnvType.CLIENT)
     public interface GenericPressAction{
@@ -17,6 +18,13 @@ public class GUIUtil {
         @Override
         public <T extends Element> void onPress(T widget) {
             MinecraftClient.getInstance().setScreen(null);
+        }
+    }
+    
+    private static class EmptyAction implements GenericPressAction {
+        @Override
+        public <T extends Element> void onPress(T widget) {
+        
         }
     }
 }
