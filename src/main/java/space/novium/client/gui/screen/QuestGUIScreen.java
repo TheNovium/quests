@@ -9,8 +9,10 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import space.novium.DreamscapeQuests;
 import space.novium.client.gui.widget.ClickableSpriteWidget;
 import space.novium.data.DataStorage;
+import space.novium.quest.QuestChapter;
 import space.novium.quest.QuestTree;
 import space.novium.util.registration.ModItems;
 import space.novium.util.FileHelper;
@@ -48,6 +50,14 @@ public class QuestGUIScreen extends Screen {
             drawY += 15;
             saveButton = addDrawableChild(new ClickableSpriteWidget(width / 2 - 16, 0, 15, 15, FileHelper.loadImageByID("gui/save_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.SAVE_ACTION, new LiteralText("Save")));
             addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.ADD_CHAPTER_ACTION, new LiteralText("Add Chapter")));
+        }
+        for(int i = 0; i < questTree.getChapterCount(); i++){
+            QuestChapter chapter = questTree.getChapter(i);
+            if(!chapter.isVisible()){
+                DreamscapeQuests.LOGGER.info("Loading from namespace {} with location {}", chapter.getIcon().getNamespace(), chapter.getIcon().getPath());
+                addDrawableChild(new ClickableSpriteWidget(0, drawY,  15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.EMPTY_ACTION, new LiteralText("")));
+                drawY += 15;
+            }
         }
     }
     

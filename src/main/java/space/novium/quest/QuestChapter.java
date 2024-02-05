@@ -57,6 +57,14 @@ public class QuestChapter {
         return dirty;
     }
     
+    public boolean isVisible() {
+        return visible;
+    }
+    
+    public Identifier getIcon(){
+        return icon;
+    }
+    
     public String getUUID(){
         return uuid.toString();
     }
