@@ -11,6 +11,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import space.novium.client.gui.widget.ClickableSpriteWidget;
 import space.novium.data.DataStorage;
+import space.novium.quest.QuestTree;
 import space.novium.util.registration.ModItems;
 import space.novium.util.FileHelper;
 import space.novium.util.GUIUtil;
@@ -39,9 +40,12 @@ public class QuestGUIScreen extends Screen {
     
     @Override
     protected void init() {
+        int drawY = 0;
+        QuestTree questTree = DataStorage.INSTANCE.getQuestTree();
         client.keyboard.setRepeatEvents(false);
         closeButton = addDrawableChild(new ClickableSpriteWidget(width - 14, 0, 12, 12, FileHelper.loadImageByID("gui/close_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
         if(creativeMode){
+            drawY += 15;
             saveButton = addDrawableChild(new ClickableSpriteWidget(width / 2 - 16, 0, 15, 15, FileHelper.loadImageByID("gui/save_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.SAVE_ACTION, new LiteralText("Save")));
             addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.ADD_CHAPTER_ACTION, new LiteralText("Add Chapter")));
         }

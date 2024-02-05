@@ -40,12 +40,24 @@ public class QuestTree {
     
     public void save(){
         int i = 0;
+        NbtCompound chapterNBT = nbt.getCompound("chapters");
         for(QuestChapter chapter : chapters){
             if(chapter.isDirty()){
-                nbt.put(String.valueOf(i), chapter.save());
+                chapterNBT.put(chapter.getUUID(), chapter.save());
             }
             i++;
         }
+    }
+    
+    public int getChapterCount(){
+        return chapters.size();
+    }
+    
+    public QuestChapter getChapter(int c){
+        if(c < chapters.size()){
+            return chapters.get(c);
+        }
+        return QuestChapter.createBlankChapter(-1);
     }
     
     public void clear(){

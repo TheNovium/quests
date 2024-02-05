@@ -18,6 +18,13 @@ public class NbtUtils {
         return b;
     }
     
+    public static boolean getOrDefault(NbtCompound nbt, String key, boolean b){
+        if(nbt.contains(key, 99)){
+            return nbt.getBoolean(key);
+        }
+        return b;
+    }
+    
     public static short getOrDefault(NbtCompound nbt, String key, short s){
         if(nbt.contains(key, 99)){
             return nbt.getShort(key);
