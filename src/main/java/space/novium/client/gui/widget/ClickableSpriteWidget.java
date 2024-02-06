@@ -60,19 +60,6 @@ public class ClickableSpriteWidget extends DrawableHelper implements Drawable, E
         this.tooltip = tooltip;
     }
     
-    public int getHeight(){
-        return height;
-    }
-    
-    protected int getYImage(boolean hovered){
-        if(pressed){
-            return 0;
-        } else if(hovered){
-            return 2;
-        }
-        return 1;
-    }
-    
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if(visible){
