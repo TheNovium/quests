@@ -64,7 +64,6 @@ public class ClickableSpriteWidget extends DrawableHelper implements Drawable, E
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if(visible){
             hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-            MinecraftClient client = MinecraftClient.getInstance();
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, texture);
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha);
@@ -123,10 +122,6 @@ public class ClickableSpriteWidget extends DrawableHelper implements Drawable, E
     
     public boolean isMouseOver(double mouseX, double mouseY){
         return mouseX >= (double)x && mouseY >= (double)y && mouseX < (double)(x + width) && mouseY < (double)(y + height);
-    }
-    
-    public boolean isHovered(){
-        return hovered || focused;
     }
     
     public void playDownSound(){
