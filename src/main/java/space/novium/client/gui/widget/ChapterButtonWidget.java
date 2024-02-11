@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import space.novium.util.GUIUtil;
 
 @Environment(EnvType.CLIENT)
-public class SpriteWithTextWidget extends DrawableHelper implements Drawable, Element, Selectable {
+public class ChapterButtonWidget extends DrawableHelper implements Drawable, Element, Selectable {
     protected Identifier texture;
     protected Text text;
     protected int width;
@@ -33,7 +33,7 @@ public class SpriteWithTextWidget extends DrawableHelper implements Drawable, El
     protected int bgColorPressed;
     protected GUIUtil.GenericPressAction onPress;
     
-    public SpriteWithTextWidget(int x, int y, int width, int height, Identifier icon, Text text, GUIUtil.GenericPressAction onPress, int bgColor, int bgColorHover, int bgColorPressed){
+    public ChapterButtonWidget(int x, int y, int width, int height, Identifier icon, Text text, GUIUtil.GenericPressAction onPress, int bgColor, int bgColorHover, int bgColorPressed){
         this.x = x;
         this.y = y;
         this.width = width;
