@@ -18,12 +18,15 @@ public class QuestTree {
         title = NbtUtils.getOrDefault(nbt, "title", "Dreamscape Quests");
         int num = ch.getSize();
         chapters = new ArrayList<>(num);
+        for(int i = 0; i < num; i++){
+            chapters.add(QuestChapter.createBlankChapter(-1));
+        }
         List<QuestChapter> toAdd = new ArrayList<>();
         for(String s : ch.getKeys()){
             NbtCompound chapterInfo = ch.getCompound(s);
             if(QuestChapter.isValidChapter(chapterInfo)){
                 QuestChapter c = new QuestChapter(chapterInfo);
-                chapters.add(c);
+                chapters.set(c.getChapterNum(), c);
             } else {
                 toAdd.add(QuestChapter.createBlankChapter(-1));
             }
