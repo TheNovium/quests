@@ -2,6 +2,7 @@ package space.novium.client.gui.widget;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import space.novium.quest.QuestChapter;
 import space.novium.quest.QuestTree;
 
 import java.util.LinkedList;
@@ -20,6 +21,11 @@ public class ChapterMenu {
     }
     
     private void buildGUI(){
-    
+        for(int i = 0; i < tree.getChapterCount(); i++){
+            QuestChapter currentChapter = tree.getChapter(i);
+            if(currentChapter.isVisible()){
+            
+            }
+        }
     }
 }

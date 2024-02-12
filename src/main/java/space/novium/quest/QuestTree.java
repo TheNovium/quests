@@ -23,7 +23,7 @@ public class QuestTree {
             NbtCompound chapterInfo = ch.getCompound(s);
             if(QuestChapter.isValidChapter(chapterInfo)){
                 QuestChapter c = new QuestChapter(chapterInfo);
-                chapters.set(c.getChapterNum(), c);
+                chapters.add(c);
             } else {
                 toAdd.add(QuestChapter.createBlankChapter(-1));
             }

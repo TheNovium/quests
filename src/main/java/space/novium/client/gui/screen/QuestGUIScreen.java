@@ -8,8 +8,10 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import space.novium.DreamscapeQuests;
+import space.novium.client.gui.widget.ChapterButtonWidget;
 import space.novium.client.gui.widget.ClickableSpriteWidget;
 import space.novium.data.DataStorage;
 import space.novium.quest.QuestChapter;
@@ -18,6 +20,9 @@ import space.novium.util.registration.ModItems;
 import space.novium.util.FileHelper;
 import space.novium.util.GUIUtil;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Environment(EnvType.CLIENT)
 public class QuestGUIScreen extends Screen {
     private ButtonWidget majorExitButton;
@@ -25,6 +30,8 @@ public class QuestGUIScreen extends Screen {
     private ClickableSpriteWidget saveButton;
     private ClickableSpriteWidget addChapterButton;
     private ClickableSpriteWidget addQuestButton;
+    private List<ChapterButtonWidget> chapterButtons;
+    private int maxWidth = 0;
     
     private int buttonBackgroundColor = 0x00000000;
     private int buttonHoverColor = 0x77ff00aa;
@@ -37,6 +44,7 @@ public class QuestGUIScreen extends Screen {
     public QuestGUIScreen(PlayerEntity player){
         super(new TranslatableText(ModItems.QUEST_SCROLL.getTranslationKey()));
         this.player = player;
+        chapterButtons = new LinkedList<>();
         creativeMode = player.isCreative() && player.hasPermissionLevel(2);
     }
     
@@ -53,9 +61,11 @@ public class QuestGUIScreen extends Screen {
         }
         for(int i = 0; i < questTree.getChapterCount(); i++){
             QuestChapter chapter = questTree.getChapter(i);
-            if(!chapter.isVisible()){
-                DreamscapeQuests.LOGGER.info("Loading from namespace {} with location {}", chapter.getIcon().getNamespace(), chapter.getIcon().getPath());
-                addDrawableChild(new ClickableSpriteWidget(0, drawY,  15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.EMPTY_ACTION, new LiteralText("")));
+            Text chText = new LiteralText(chapter.getTitle());
+            ChapterButtonWidget chb = new ChapterButtonWidget(0, drawY, 15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), new LiteralText(chapter.getTitle()), GUIUtil.EMPTY_ACTION, buttonBackgroundColor, buttonHoverColor, buttonBackgroundColor);
+            chapterButtons.add(chb);
+            if(!chapter.isVisible() || creativeMode){
+                addDrawableChild(chb);
                 drawY += 15;
             }
         }

@@ -44,6 +44,10 @@ public class QuestChapter {
         return chapter;
     }
     
+    public String getTitle(){
+        return title;
+    }
+    
     public int getChapterNum() {
         return chapterNum;
     }

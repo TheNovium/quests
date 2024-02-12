@@ -3,6 +3,8 @@ package space.novium.client.gui.widget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
@@ -49,6 +51,8 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if(visible){
+            MinecraftClient client = MinecraftClient.getInstance();
+            TextRenderer textRenderer = client.textRenderer;
             hovered = isMouseOver(mouseX, mouseY);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, texture);
@@ -63,6 +67,7 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
             };
             fill(matrices, x, y, x + width, y + height, color);
             drawTexture(matrices, x + 1, y + 1, 0, 0, width - 2, height - 2, width - 2, height - 2);
+            drawCenteredText(matrices, textRenderer, text, x + width, y, active ? 0xffffffff : 0xaaaaaaaa);
         }
     }
     
