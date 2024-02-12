@@ -2,12 +2,15 @@ package space.novium.client.gui.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import space.novium.DreamscapeQuests;
@@ -62,7 +65,12 @@ public class QuestGUIScreen extends Screen {
         for(int i = 0; i < questTree.getChapterCount(); i++){
             QuestChapter chapter = questTree.getChapter(i);
             Text chText = new LiteralText(chapter.getTitle());
-            ChapterButtonWidget chb = new ChapterButtonWidget(0, drawY, 15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), new LiteralText(chapter.getTitle()), GUIUtil.EMPTY_ACTION, buttonBackgroundColor, buttonHoverColor, buttonBackgroundColor);
+            MinecraftClient client = MinecraftClient.getInstance();
+            TextRenderer textRenderer = client.textRenderer;
+            if(maxWidth < textRenderer.getWidth(chText)){
+                maxWidth = textRenderer.getWidth(chText);
+            }
+            ChapterButtonWidget chb = new ChapterButtonWidget(0, drawY, 15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), chText, GUIUtil.EMPTY_ACTION, buttonBackgroundColor, buttonHoverColor, buttonBackgroundColor);
             chapterButtons.add(chb);
             if(!chapter.isVisible() || creativeMode){
                 addDrawableChild(chb);

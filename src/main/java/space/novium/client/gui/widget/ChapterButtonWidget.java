@@ -41,7 +41,7 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
         this.width = width;
         this.height = height;
         this.texture = icon;
-        this.text = text;
+        this.text = text.getWithStyle(text.getStyle()).get(0);
         this.onPress = onPress;
         this.bgColor = bgColor;
         this.bgColorHover = bgColorHover;
@@ -67,7 +67,9 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
             };
             fill(matrices, x, y, x + width, y + height, color);
             drawTexture(matrices, x + 1, y + 1, 0, 0, width - 2, height - 2, width - 2, height - 2);
-            drawCenteredText(matrices, textRenderer, text, x + width, y, active ? 0xffffffff : 0xaaaaaaaa);
+            if(hovered){
+                drawTextWithShadow(matrices, textRenderer, text, x + width, y + (textRenderer.fontHeight / 2), active ? 0xffffffff : 0xaaaaaaaa);
+            }
         }
     }
     
