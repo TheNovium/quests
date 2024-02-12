@@ -35,9 +35,10 @@ public class QuestGUIScreen extends Screen {
     private ClickableSpriteWidget addQuestButton;
     private List<ChapterButtonWidget> chapterButtons;
     private int maxWidth = 0;
+    private boolean displayChapterInfo;
     
     private int buttonBackgroundColor = 0x00000000;
-    private int buttonHoverColor = 0x77ff00aa;
+    private int buttonHoverColor = 0x57ff00aa;
     private int buttonClickColor = 0xaaff77bb;
     
     private boolean creativeMode;
@@ -77,13 +78,31 @@ public class QuestGUIScreen extends Screen {
                 drawY += 15;
             }
         }
+        for(ChapterButtonWidget chb : chapterButtons){
+            chb.setTotalWidth(maxWidth + 17);
+        }
     }
     
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
-        DrawableHelper.fill(matrices, 15, 0, width, height, 0x809f88ff);
-        DrawableHelper.fill(matrices, 0, 0, 15, height, 0x709088f0);
+        DrawableHelper.fill(matrices, 0, 0, width, height, 0x709f88ff);
+        DrawableHelper.fill(matrices, 0, 0, displayChapterInfo ? maxWidth + 17 : 15, height, 0x209088f0);
+        if(displayChapterInfo){
+            if(mouseX > maxWidth + 17){
+                displayChapterInfo = false;
+                for(ChapterButtonWidget cbw : chapterButtons){
+                    cbw.hideText();
+                }
+            }
+        } else {
+            if(mouseX <= 15){
+                displayChapterInfo = true;
+                for(ChapterButtonWidget cbw : chapterButtons){
+                    cbw.displayText();
+                }
+            }
+        }
         super.render(matrices, mouseX, mouseY, delta);
     }
 }

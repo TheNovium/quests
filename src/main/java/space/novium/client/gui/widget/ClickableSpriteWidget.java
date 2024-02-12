@@ -66,10 +66,6 @@ public class ClickableSpriteWidget extends DrawableHelper implements Drawable, E
             hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, texture);
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.enableDepthTest();
             int color = switch(getType()){
                 case NONE -> bgColor;
                 case HOVERED -> bgColorHover;

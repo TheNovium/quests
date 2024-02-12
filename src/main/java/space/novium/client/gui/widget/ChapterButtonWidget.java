@@ -22,9 +22,11 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
     protected Text text;
     protected int width;
     protected int height;
+    protected int totalWidth;
     public int x;
     public int y;
     protected boolean hovered;
+    private boolean displayText;
     public boolean active = true;
     public boolean pressed = false;
     public boolean visible = true;
@@ -39,9 +41,11 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
         this.x = x;
         this.y = y;
         this.width = width;
+        this.totalWidth = width;
         this.height = height;
         this.texture = icon;
-        this.text = text.getWithStyle(text.getStyle()).get(0);
+        this.text = text;
+        this.displayText = false;
         this.onPress = onPress;
         this.bgColor = bgColor;
         this.bgColorHover = bgColorHover;
@@ -56,21 +60,29 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
             hovered = isMouseOver(mouseX, mouseY);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, texture);
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.enableDepthTest();
             int color = switch(getType()){
                 case NONE -> bgColor;
                 case HOVERED -> bgColorHover;
                 case FOCUSED -> bgColorPressed;
             };
-            fill(matrices, x, y, x + width, y + height, color);
+            fill(matrices, x, y, x + (displayText ? totalWidth : width), y + height, color);
             drawTexture(matrices, x + 1, y + 1, 0, 0, width - 2, height - 2, width - 2, height - 2);
-            if(hovered){
+            if(displayText){
                 drawTextWithShadow(matrices, textRenderer, text, x + width, y + (textRenderer.fontHeight / 2), active ? 0xffffffff : 0xaaaaaaaa);
             }
         }
+    }
+    
+    public void setTotalWidth(int w){
+        this.totalWidth = w;
+    }
+    
+    public void displayText(){
+        displayText = true;
+    }
+    
+    public void hideText(){
+        displayText = false;
     }
     
     @Override
@@ -84,6 +96,6 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
     }
     
     public boolean isMouseOver(double mouseX, double mouseY){
-        return mouseX >= (double)x && mouseY >= (double)y && mouseX < (double)(x + width) && mouseY < (double)(y + height);
+        return mouseX >= (double)x && mouseY >= (double)y && mouseX < (double)(x + (displayText ? totalWidth : width)) && mouseY < (double)(y + height);
     }
 }
