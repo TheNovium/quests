@@ -78,6 +78,9 @@ public class QuestGUIScreen extends Screen {
                 drawY += 15;
             }
         }
+        if(creativeMode){
+            maxWidth += 20;
+        }
         for(ChapterButtonWidget chb : chapterButtons){
             chb.setTotalWidth(maxWidth + 17);
         }
