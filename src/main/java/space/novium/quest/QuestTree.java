@@ -55,7 +55,7 @@ public class QuestTree {
         NbtCompound chapterNBT = nbt.getCompound("chapters");
         for(QuestChapter chapter : chapters){
             if(chapter.isDirty()){
-                chapterNBT.put(chapter.getUUID(), chapter.save());
+                chapterNBT.put(chapter.getUUID().toString(), chapter.save());
             }
             i++;
         }

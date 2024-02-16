@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -23,6 +24,7 @@ import space.novium.util.GUIUtil;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Environment(EnvType.CLIENT)
 public class QuestGUIScreen extends Screen {
@@ -69,7 +71,7 @@ public class QuestGUIScreen extends Screen {
             if(maxWidth < textRenderer.getWidth(chText)){
                 maxWidth = textRenderer.getWidth(chText);
             }
-            ChapterButtonWidget chb = new ChapterButtonWidget(0, drawY, 15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), chText, GUIUtil.EMPTY_ACTION, buttonBackgroundColor, buttonHoverColor, buttonBackgroundColor);
+            ChapterButtonWidget chb = new ChapterButtonWidget(0, drawY, 15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), chText, new LoadChapterAction(chapter.getUUID()), buttonBackgroundColor, buttonHoverColor, buttonBackgroundColor);
             chapterButtons.add(chb);
             if(!chapter.isVisible() || editMode){
                 addDrawableChild(chb);
@@ -105,5 +107,22 @@ public class QuestGUIScreen extends Screen {
             }
         }
         super.render(matrices, mouseX, mouseY, delta);
+    }
+    
+    private void loadChapter(UUID chapter){
+    
+    }
+    
+    private class LoadChapterAction implements GUIUtil.GenericPressAction {
+        protected UUID chapter;
+        
+        public LoadChapterAction(UUID chapter){
+            this.chapter = chapter;
+        }
+        
+        @Override
+        public <T extends Element> void onPress(T widget) {
+            loadChapter(chapter);
+        }
     }
 }

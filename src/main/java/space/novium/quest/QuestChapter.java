@@ -69,8 +69,8 @@ public class QuestChapter {
         return icon;
     }
     
-    public String getUUID(){
-        return uuid.toString();
+    public UUID getUUID(){
+        return uuid;
     }
     
     private void setDirty(){
