@@ -4,13 +4,13 @@ import net.minecraft.nbt.NbtCompound;
 import space.novium.DreamscapeQuests;
 import space.novium.util.NbtUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class QuestTree {
     private String title;
     private List<QuestChapter> chapters;
     private NbtCompound nbt;
+    private Map<UUID, Boolean> whoCanEdit;
     
     public QuestTree(NbtCompound nbt){
         this.nbt = nbt;
@@ -35,10 +35,19 @@ public class QuestTree {
             c.setChapterNum(chapters.size());
             chapters.add(c);
         }
+        whoCanEdit = new HashMap<>();
     }
     
     public void addBlankChapter(){
         chapters.add(QuestChapter.createBlankChapter(chapters.size()));
+    }
+    
+    public boolean canEdit(UUID player){
+        return whoCanEdit.getOrDefault(player, false);
+    }
+    
+    public void setEdit(UUID player, boolean edit){
+        whoCanEdit.put(player, edit);
     }
     
     public void save(){

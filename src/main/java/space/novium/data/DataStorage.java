@@ -1,6 +1,7 @@
 package space.novium.data;
 
 import net.minecraft.client.gui.Element;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import space.novium.DreamscapeQuests;
@@ -66,6 +67,10 @@ public class DataStorage {
     public void clear(){
         questTree.clear();
         save();
+    }
+    
+    public void setEdit(PlayerEntity player, boolean canEdit){
+        questTree.setEdit(player.getUuid(), canEdit);
     }
     
     public enum ErrorCodes {

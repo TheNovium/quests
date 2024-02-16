@@ -49,7 +49,7 @@ public class QuestGUIScreen extends Screen {
         super(new TranslatableText(ModItems.QUEST_SCROLL.getTranslationKey()));
         this.player = player;
         chapterButtons = new LinkedList<>();
-        creativeMode = player.isCreative() && player.hasPermissionLevel(2);
+        creativeMode = DataStorage.INSTANCE.getQuestTree().canEdit(player.getUuid());
     }
     
     @Override
