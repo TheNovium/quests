@@ -11,7 +11,9 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import space.novium.util.GUIUtil;
@@ -73,6 +75,31 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
         }
     }
     
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if(clicked(mouseX, mouseY)){
+            playDownSound();
+            pressed = true;
+            focused = true;
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if(clicked(mouseX, mouseY)){
+            onPress.onPress(this);
+            focused = false;
+            return true;
+        }
+        return false;
+    }
+    
+    protected boolean clicked(double mouseX, double mouseY){
+        return active && visible && isMouseOver(mouseX, mouseY);
+    }
+    
     public void setTotalWidth(int w){
         this.totalWidth = w;
     }
@@ -97,5 +124,9 @@ public class ChapterButtonWidget extends DrawableHelper implements Drawable, Ele
     
     public boolean isMouseOver(double mouseX, double mouseY){
         return mouseX >= (double)x && mouseY >= (double)y && mouseX < (double)(x + (displayText ? totalWidth : width)) && mouseY < (double)(y + height);
+    }
+    
+    public void playDownSound(){
+        MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
     }
 }

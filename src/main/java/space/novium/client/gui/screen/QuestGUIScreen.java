@@ -10,10 +10,8 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import space.novium.DreamscapeQuests;
 import space.novium.client.gui.widget.ChapterButtonWidget;
 import space.novium.client.gui.widget.ClickableSpriteWidget;
 import space.novium.data.DataStorage;
@@ -39,9 +37,9 @@ public class QuestGUIScreen extends Screen {
     
     private int buttonBackgroundColor = 0x00000000;
     private int buttonHoverColor = 0x57ff00aa;
-    private int buttonClickColor = 0xaaff77bb;
+    private int buttonClickColor = 0xcaff77bb;
     
-    private boolean creativeMode;
+    private boolean editMode;
     
     private PlayerEntity player;
     
@@ -49,7 +47,7 @@ public class QuestGUIScreen extends Screen {
         super(new TranslatableText(ModItems.QUEST_SCROLL.getTranslationKey()));
         this.player = player;
         chapterButtons = new LinkedList<>();
-        creativeMode = DataStorage.INSTANCE.getQuestTree().canEdit(player.getUuid());
+        editMode = DataStorage.INSTANCE.getQuestTree().canEdit(player.getUuid());
     }
     
     @Override
@@ -58,7 +56,7 @@ public class QuestGUIScreen extends Screen {
         QuestTree questTree = DataStorage.INSTANCE.getQuestTree();
         client.keyboard.setRepeatEvents(false);
         closeButton = addDrawableChild(new ClickableSpriteWidget(width - 14, 0, 12, 12, FileHelper.loadImageByID("gui/close_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
-        if(creativeMode){
+        if(editMode){
             drawY += 15;
             saveButton = addDrawableChild(new ClickableSpriteWidget(width / 2 - 16, 0, 15, 15, FileHelper.loadImageByID("gui/save_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.SAVE_ACTION, new LiteralText("Save")));
             addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.ADD_CHAPTER_ACTION, new LiteralText("Add Chapter")));
@@ -73,12 +71,12 @@ public class QuestGUIScreen extends Screen {
             }
             ChapterButtonWidget chb = new ChapterButtonWidget(0, drawY, 15, 15, FileHelper.loadImageByID(chapter.getIcon().getNamespace(), "item/" + chapter.getIcon().getPath()), chText, GUIUtil.EMPTY_ACTION, buttonBackgroundColor, buttonHoverColor, buttonBackgroundColor);
             chapterButtons.add(chb);
-            if(!chapter.isVisible() || creativeMode){
+            if(!chapter.isVisible() || editMode){
                 addDrawableChild(chb);
                 drawY += 15;
             }
         }
-        if(creativeMode){
+        if(editMode){
             maxWidth += 20;
         }
         for(ChapterButtonWidget chb : chapterButtons){
