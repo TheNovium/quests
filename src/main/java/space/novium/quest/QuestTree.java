@@ -9,7 +9,7 @@ public class QuestTree {
     private String title;
     private List<QuestChapter> chapters;
     private NbtCompound nbt;
-    private Map<UUID, Boolean> whoCanEdit;
+    private final Map<UUID, Boolean> whoCanEdit;
     
     public QuestTree(NbtCompound nbt){
         this.nbt = nbt;

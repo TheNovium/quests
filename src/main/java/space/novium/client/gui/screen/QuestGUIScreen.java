@@ -22,13 +22,10 @@ import space.novium.util.registration.ModItems;
 import space.novium.util.FileHelper;
 import space.novium.util.GUIUtil;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class QuestGUIScreen extends Screen {
-    
     private ButtonWidget majorExitButton;
     private ClickableSpriteWidget closeButton;
     private ClickableSpriteWidget saveButton;
@@ -60,12 +57,16 @@ public class QuestGUIScreen extends Screen {
         closeButton = addDrawableChild(new ClickableSpriteWidget(width - 14, 0, 12, 12, FileHelper.loadImageByID("gui/close_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
         if(editMode){
             saveButton = addDrawableChild(new ClickableSpriteWidget(width / 2 - 16, 0, 15, 15, FileHelper.loadImageByID("gui/save_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.SAVE_ACTION, new LiteralText("Save")));
-            addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.ADD_CHAPTER_ACTION, new LiteralText("Add Chapter")));
+            addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, new DataStorage.AddChapterAction(this), new LiteralText("Add Chapter")));
         }
         refreshChapters();
     }
     
     public void refreshChapters(){
+        refreshChapters(false);
+    }
+    
+    public void refreshChapters(boolean showText){
         for(ChapterButtonWidget chb : chapterButtons){
             remove(chb);
         }
@@ -86,6 +87,9 @@ public class QuestGUIScreen extends Screen {
             if(!chapter.isVisible() || editMode){
                 addDrawableChild(chb);
                 drawY += 15;
+            }
+            if(showText){
+                chb.displayText();
             }
         }
         if(editMode){
