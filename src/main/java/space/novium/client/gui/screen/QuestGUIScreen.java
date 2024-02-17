@@ -28,6 +28,7 @@ import java.util.UUID;
 
 @Environment(EnvType.CLIENT)
 public class QuestGUIScreen extends Screen {
+    
     private ButtonWidget majorExitButton;
     private ClickableSpriteWidget closeButton;
     private ClickableSpriteWidget saveButton;
@@ -54,17 +55,26 @@ public class QuestGUIScreen extends Screen {
     
     @Override
     protected void init() {
-        int drawY = 0;
         QuestTree questTree = DataStorage.INSTANCE.getQuestTree();
         client.keyboard.setRepeatEvents(false);
         closeButton = addDrawableChild(new ClickableSpriteWidget(width - 14, 0, 12, 12, FileHelper.loadImageByID("gui/close_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, GUIUtil.CLOSE_ACTION, new LiteralText("Close")));
         if(editMode){
-            drawY += 15;
             saveButton = addDrawableChild(new ClickableSpriteWidget(width / 2 - 16, 0, 15, 15, FileHelper.loadImageByID("gui/save_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.SAVE_ACTION, new LiteralText("Save")));
             addChapterButton = addDrawableChild(new ClickableSpriteWidget(0, 0, 15, 15, FileHelper.loadImageByID("gui/add_button"), buttonBackgroundColor, buttonHoverColor, buttonClickColor, DataStorage.ADD_CHAPTER_ACTION, new LiteralText("Add Chapter")));
         }
-        for(int i = 0; i < questTree.getChapterCount(); i++){
-            QuestChapter chapter = questTree.getChapter(i);
+        refreshChapters();
+    }
+    
+    public void refreshChapters(){
+        for(ChapterButtonWidget chb : chapterButtons){
+            remove(chb);
+        }
+        chapterButtons = new LinkedList<>();
+        maxWidth = 0;
+        int drawY = editMode ? 15 : 0;
+        QuestTree tree = DataStorage.INSTANCE.getQuestTree();
+        for(int i = 0; i < tree.getChapterCount(); i++){
+            QuestChapter chapter = tree.getChapter(i);
             Text chText = new LiteralText(chapter.getTitle());
             MinecraftClient client = MinecraftClient.getInstance();
             TextRenderer textRenderer = client.textRenderer;

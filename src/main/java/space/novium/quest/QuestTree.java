@@ -1,7 +1,6 @@
 package space.novium.quest;
 
 import net.minecraft.nbt.NbtCompound;
-import space.novium.DreamscapeQuests;
 import space.novium.util.NbtUtils;
 
 import java.util.*;
